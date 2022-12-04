@@ -1,5 +1,5 @@
 # class for a chess knight
-class knight
+class knight < Piece
   def directions
     [
       [1, 2],
