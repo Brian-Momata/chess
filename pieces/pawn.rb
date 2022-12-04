@@ -17,6 +17,6 @@ class Pawn
 
   def at_beginning?
     row, col = location
-    row == 1 && color == :black || row == 6 && color == :white
+    (row == 1 && color == :black) || (row == 6 && color == :white)
   end
 end
