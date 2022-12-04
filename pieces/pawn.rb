@@ -1,5 +1,5 @@
 # class for pawn in chess
-class Pawn
+class Pawn < Piece
   def directions
     return two_steps if at_beginning?
     [
