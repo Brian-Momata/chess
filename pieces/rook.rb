@@ -1,5 +1,5 @@
 # class for a chess rook
-class Rook
+class Rook < Piece
   def directions
     [
       [0, 1],
