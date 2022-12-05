@@ -1,5 +1,6 @@
+require_relative 'stepable'
 # class for a chess knight
-class knight < Piece
+class Knight < Piece
   def directions
     [
       [1, 2],
