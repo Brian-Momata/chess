@@ -7,4 +7,9 @@ class Piece
     @location = location
     @color = color
   end
+
+  def out_of_bounds?(position = location)
+    row, col = position
+    row > 7 || col > 7 || row < 0 || col < 0
+  end
 end
