@@ -1,22 +1,31 @@
 # class for pawn in chess
 class Pawn < Piece
   def directions
-    return two_steps if at_beginning?
-    [
-      [0, 1]
-    ]
+    if at_beginning? && color == :black
+      [
+        [1, 0],
+        [2, 0]
+      ]
+    elsif at_beginning? && color == :white
+      [
+        [-1, 0],
+        [-2, 0]
+      ]
+    elsif color == :black
+      [
+        [1, 0]
+      ]
+    elsif color == :white
+      [
+        [-1, 0]
+      ]
+    end
   end
 
   private
 
-  def two_steps
-    [
-      [0, 2]
-    ]
-  end
-
   def at_beginning?
     row, col = location
-    (row == 1 && color == :black) || (row == 6 && color == :white)
+    row == 1 || row == 6
   end
 end
