@@ -1,5 +1,6 @@
 # class for pawn in chess
 class Pawn < Piece
+  include Stepable
   def directions
     if at_beginning? && color == :black
       [

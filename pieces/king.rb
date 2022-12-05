@@ -1,5 +1,6 @@
 # class for a chess king
 class King < Piece
+  include Stepable
   def directions
     [
       [0, 1],
