@@ -1,6 +1,10 @@
+require_relative 'piece.rb'
+require_relative 'stepable.rb'
+
 # class for pawn in chess
 class Pawn < Piece
   include Stepable
+
   def directions
     if at_beginning? && color == :black
       [
@@ -21,6 +25,10 @@ class Pawn < Piece
         [-1, 0]
       ]
     end
+  end
+
+  def to_s
+    color == :black ? "\u265F": "\u2659"
   end
 
   private
