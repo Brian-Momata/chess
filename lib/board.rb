@@ -29,28 +29,38 @@ class Board
 
   def set_board
     8.times do |i|
-      board[1][i] = Pawn.new([1, i], :black)
-      board[6][i] = Pawn.new([6, i], :white)
+      board[1][i] = Pawn.new(self, [1, i], :black)
+      board[6][i] = Pawn.new(self, [6, i], :white)
     end
-    board[0][0] = Rook.new([0, 0], :black)
-    board[0][7] = Rook.new([0, 7], :black)
-    board[7][0] = Rook.new([7, 0], :white)
-    board[7][7] = Rook.new([7, 7], :white)
+    board[0][0] = Rook.new(self, [0, 0], :black)
+    board[0][7] = Rook.new(self, [0, 7], :black)
+    board[7][0] = Rook.new(self, [7, 0], :white)
+    board[7][7] = Rook.new(self, [7, 7], :white)
 
-    board[0][1] = Knight.new([0, 1], :black)
-    board[0][6] = Knight.new([0, 6], :black)
-    board[7][1] = Knight.new([7, 1], :white)
-    board[7][6] = Knight.new([7, 6], :white)
+    board[0][1] = Knight.new(self, [0, 1], :black)
+    board[0][6] = Knight.new(self, [0, 6], :black)
+    board[7][1] = Knight.new(self, [7, 1], :white)
+    board[7][6] = Knight.new(self, [7, 6], :white)
 
-    board[0][2] = Bishop.new([0, 2], :black)
-    board[0][5] = Bishop.new([0, 5], :black)
-    board[7][2] = Bishop.new([7, 2], :white)
-    board[7][5] = Bishop.new([7, 5], :white)
+    board[0][2] = Bishop.new(self, [0, 2], :black)
+    board[0][5] = Bishop.new(self, [0, 5], :black)
+    board[7][2] = Bishop.new(self, [7, 2], :white)
+    board[7][5] = Bishop.new(self, [7, 5], :white)
 
-    board[0][4] = King.new([0, 4], :black)
-    board[7][4] = King.new([7, 4], :white)
+    board[0][4] = King.new(self, [0, 4], :black)
+    board[7][4] = King.new(self, [7, 4], :white)
 
-    board[0][3] = Queen.new([0, 3], :black)
-    board[7][3] = Queen.new([7, 3], :white)
+    board[0][3] = Queen.new(self, [0, 3], :black)
+    board[7][3] = Queen.new(self, [7, 3], :white)
+  end
+
+  def [](location)
+    r, c = location
+    board[r][c]
+  end
+
+  def []=(location, piece)
+    r, c = location
+    board[r][c] = piece
   end
 end
