@@ -5,8 +5,13 @@ module Stepable
     moves = []
     row, col = location
     directions.each do |(dr, dc)|
-      moves << [row + dr, col + dc]
+      new_loc = [row + dr, col + dc]
+      break if out_of_bounds?(new_loc)
+
+      if board[new_loc].nil? || enemy?(board[new_loc])
+        moves << new_loc
+      end
     end
-    moves 
+    moves
   end
 end
