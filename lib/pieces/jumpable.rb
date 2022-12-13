@@ -11,7 +11,12 @@ module Jumpable
         new_loc = [row, col]
         break if out_of_bounds?(new_loc)
 
-        moves << new_loc
+        if board[new_loc].nil?
+          moves << new_loc
+        elsif enemy?(board[new_loc])
+          moves << new_loc
+          break
+        end
       end
     end
     moves
