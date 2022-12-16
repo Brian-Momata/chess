@@ -13,6 +13,29 @@ class Board
     @board = Array.new(8) { Array.new(8) }
   end
 
+  def [](location)
+    r, c = location
+    board[r][c]
+  end
+
+  def []=(location, piece)
+    r, c = location
+    board[r][c] = piece
+  end
+
+  def move_piece(start_pos, end_pos)
+    piece = self[start_pos]
+    self[start_pos] = nil
+  
+    if !piece.available_moves.include?(end_pos)
+      raise 'Invalid Move'
+    else
+     self[end_pos] = piece
+    end
+    
+    piece.location = end_pos
+  end
+
   def render
     8.times do |r|
       puts ''
@@ -52,15 +75,5 @@ class Board
 
     board[0][3] = Queen.new(self, [0, 3], :black)
     board[7][3] = Queen.new(self, [7, 3], :white)
-  end
-
-  def [](location)
-    r, c = location
-    board[r][c]
-  end
-
-  def []=(location, piece)
-    r, c = location
-    board[r][c] = piece
   end
 end
