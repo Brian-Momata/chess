@@ -25,15 +25,14 @@ class Board
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
-    self[start_pos] = nil
-  
+    
     if !piece.available_moves.include?(end_pos)
       raise 'Invalid Move'
     else
      self[end_pos] = piece
     end
-    
     piece.location = end_pos
+    self[start_pos] = nil
   end
 
   def render
