@@ -23,6 +23,18 @@ class Board
     board[r][c] = piece
   end
 
+  def in_check?
+    kings = board.flatten.select { |piece| piece.is_a?(King) }
+    pieces = board.flatten.select { |piece| !piece.is_a?(King) && !piece.nil? }
+    
+    pieces.each do |piece|
+      kings.each do |king|
+        return true if piece.available_moves.include?(king.location)
+      end
+    end
+    false
+  end
+
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
     
