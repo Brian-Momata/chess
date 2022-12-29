@@ -8,10 +8,20 @@ module Stepable
       new_loc = [row + dr, col + dc]
       next if out_of_bounds?(new_loc)
 
-      if board[new_loc].nil? || enemy?(board[new_loc])
-        moves[:av_moves] << new_loc
+      if self.is_a?(King)
+        if board[new_loc].nil?
+          moves[:av_moves] << new_loc
+        elsif enemy?(board[new_loc]) && !board[new_loc].protected?
+          moves[:av_moves] << new_loc
+        elsif !board[new_loc].nil? && !enemy?(board[new_loc])
+          moves[:close_friends] << new_loc
+        end
       else
-        moves[:close_friends] << new_loc
+        if board[new_loc].nil? || enemy?(board[new_loc])
+          moves[:av_moves] << new_loc
+        else
+          moves[:close_friends] << new_loc
+        end
       end
     end
     moves
