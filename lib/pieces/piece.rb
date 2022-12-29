@@ -19,4 +19,11 @@ class Piece
     row, col = position
     row > 7 || col > 7 || row < 0 || col < 0
   end
+
+  def protected?
+    friends = board.board.flatten.select { |piece| !piece.nil? && !enemy?(piece) }
+    friends.collect { |friend| friend.available_moves[:close_friends] }
+    .flatten(1)
+    .include?(location)
+  end
 end
