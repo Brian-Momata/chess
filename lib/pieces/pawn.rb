@@ -27,29 +27,38 @@ class Pawn < Piece
   end
 
   def available_moves
-    moves = []
+    moves = { :av_moves => [], :close_friends => [] }
     row, col = location
     directions.each do |(dr, dc)|
       new_loc = [row + dr, col + dc]
       break if out_of_bounds?(new_loc)
 
       if board[new_loc].nil?
-        moves << new_loc unless !board[one_forward].nil?
+        moves[:av_moves] << new_loc unless !board[one_forward].nil?
       end
       if color == :black && enemy?(board[[row + 1, col - 1]])
-        moves << [row + 1, col - 1]
+        moves[:av_moves] << [row + 1, col - 1]
       end
-
       if color == :black && enemy?(board[[row + 1, col + 1]])
-        moves << [row + 1, col + 1]
+        moves[:av_moves] << [row + 1, col + 1]
       end
-
       if color == :white && enemy?(board[[row -1, col + 1]])
-        moves << [row -1, col + 1]
+        moves[:av_moves] << [row -1, col + 1]
       end
-
       if color == :white && enemy?(board[[row -1, col - 1]])
-        moves << [row -1, col - 1]
+        moves[:av_moves] << [row -1, col - 1]
+      end
+      if !board[[row + 1, col - 1]].nil? && color == :black && !enemy?(board[[row + 1, col - 1]])
+        moves[:close_friends] << [row + 1, col - 1]
+      end
+      if !board[[row + 1, col + 1]].nil? && color == :black && !enemy?(board[[row + 1, col + 1]])
+        moves[:close_friends] << [row + 1, col + 1]
+      end
+      if !board[[row - 1, col - 1]].nil? && (color == :white && !enemy?(board[[row - 1, col - 1]]))
+        moves[:close_friends] << [row - 1, col - 1]
+      end
+      if !board[[row - 1, col + 1]].nil? && (color == :white && !enemy?(board[[row - 1, col + 1]]))
+        moves[:close_friends] << [row - 1, col + 1]
       end
     end
     moves
