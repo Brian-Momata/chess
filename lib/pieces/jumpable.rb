@@ -1,7 +1,7 @@
 # module for a piece that can jump over squares
 module Jumpable
   def available_moves
-    moves = { :av_moves => [], :close_friends=> [] }
+    moves = { :av_moves => [], :close_friends => [] }
     
     directions.each do |(dr, dc)|
       row, col = location
