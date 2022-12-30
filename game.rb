@@ -9,5 +9,17 @@ class Game
     @player2 = player2
     @current_player = player2
   end
+  
+  def over?
+    board.checkmate?
+  end
 
+  def play
+    board.render
+    until over?
+      turn_play
+      board.render
+      switch_player!
+    end
+  end
 end
