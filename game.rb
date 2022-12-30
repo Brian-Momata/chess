@@ -26,4 +26,36 @@ class Game
   def switch_player!
     @current_player = (current_player == player1) ? player2 : player1
   end
+
+  def turn_play
+    start_pos = get_start
+    make_move(start_pos)
+  end
+
+  private
+
+  def get_start(start_pos = nil)
+    loop do
+      puts "#{current_player.color.capitalize}'s turn: Select piece you want to move"
+      start_pos = current_player.get_pos
+      if !board[start_pos].nil? && board[start_pos].color == current_player.color
+        break
+      end
+      puts "Invalid Choice: Choose a #{current_player.color} piece"
+    end
+    start_pos
+  end
+
+  def make_move(start_pos)
+    loop do
+      puts "Select a position to move to:"
+      end_pos = current_player.get_pos
+      begin
+        board.move_piece(start_pos, end_pos)
+        break
+      rescue RuntimeError
+        puts "The piece can't move to that square"
+      end
+    end
+  end
 end
