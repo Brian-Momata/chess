@@ -9,7 +9,7 @@ class Game
     @player2 = player2
     @current_player = player2
   end
-  
+
   def over?
     board.checkmate?
   end
@@ -21,5 +21,9 @@ class Game
       board.render
       switch_player!
     end
+  end
+
+  def switch_player!
+    @current_player = (current_player == player1) ? player2 : player1
   end
 end
