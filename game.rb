@@ -30,7 +30,7 @@ class Game
   def turn_play
     start_pos = get_start
     make_move(start_pos)
-    system ('clear') || system ('cls')
+    system('clear') || system('cls')
   end
 
   private
