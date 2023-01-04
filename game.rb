@@ -1,13 +1,40 @@
+require 'yaml'
+
 # class holds game logic
 class Game
-  attr_reader :board, :player1, :player2
-  attr_accessor :current_player
+  attr_reader :player1, :player2
+  attr_accessor :current_player, :board
 
   def initialize(board, player1, player2)
     @board = board
     @player1 = player1
     @player2 = player2
     @current_player = player2
+  end
+
+  def load
+    if File.exist?('saved_games/game_1.yaml')
+      saved_game = File.open('saved_games/game_1.yaml') { |f| YAML.safe_load(
+        f,
+        aliases: true,
+        permitted_classes:[
+          Symbol,
+          Board,
+          Rook,
+          King,
+          Queen,
+          Bishop,
+          Knight,
+          Pawn,
+          Player
+          ]
+        )
+      }
+      @board = saved_game[0]
+      @current_player = saved_game[1]
+    else
+      puts "There're no saved games"
+    end
   end
 
   def over?
@@ -47,8 +74,17 @@ class Game
     start_pos
   end
 
-  def make_move(start_pos)
+  def make_move(start_pos = nil)
     loop do
+      puts "Enter [1] to change piece. Current selection is #{start_pos}...
+      [Any Key] to continue...
+      [save] to save progress."
+      selection = gets.chomp
+      if selection.to_i == 1
+        start_pos = get_start
+      elsif selection.downcase == 'save'
+        save([@board, @current_player])
+      end
       puts "Select a position to move to:"
       end_pos = current_player.get_pos
       begin
@@ -58,5 +94,11 @@ class Game
         puts "The piece can't move to that square"
       end
     end
+  end
+
+  def save(objects)
+    Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
+    yaml = YAML.dump(objects)
+    File.open('saved_games/game_1.yaml', 'w') { |f| f.puts yaml}
   end
 end
