@@ -62,17 +62,23 @@ class Board
   end
 
   def render
-    8.times do |r|
+    numbers = ('1'..'8').to_a.reverse!
+    letters = ('a'..'h').to_a
+
+    numbers.each_with_index do |num, r|
       puts ''
-      puts '-----------------------'
-      8.times do |c|
+      puts '  -------------------------------'
+      print num + ' | '
+      letters.each_index do |c|
         piece = board[r][c]
         print " " if piece.nil?
-        print "#{piece}| "
+        print "#{piece}|  "
       end
     end
     puts ''
-    puts '-----------------------'
+    puts '  -------------------------------'
+    letters.each { |l| print "   #{l}" }
+    puts ''
   end
 
   def set_board
