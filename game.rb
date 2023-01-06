@@ -66,8 +66,10 @@ class Game
     loop do
       puts "#{current_player.color.capitalize}'s turn: Select piece you want to move"
       start_pos = current_player.get_pos
-      if !board[start_pos].nil? && board[start_pos].color == current_player.color
-        break
+      if !start_pos.include?(nil)
+        if !board[start_pos].nil? && board[start_pos].color == current_player.color
+          break
+        end
       end
       puts "Invalid Choice: Choose a #{current_player.color} piece"
     end
