@@ -82,8 +82,13 @@ class Game
   end
 
   def make_move(start_pos = nil)
+    numbers = ('1'..'8').to_a.reverse!
+    letters = ('a'..'h').to_a
+    r, c = start_pos
+    l = letters[c]
+    n = numbers[r]
     loop do
-      puts "Enter [1] to change piece. Current selection is #{start_pos}...
+      puts "Enter [1] to change piece. Current selection is #{l + n}...
       [Any Key] to continue...
       [save] to save progress."
       selection = gets.chomp
