@@ -15,6 +15,6 @@ class Bishop < Piece
   end
 
   def to_s
-    color == :black ? "\u265D": "\u2657"
+    color == :white ? "\u265D": "\u2657"
   end
 end

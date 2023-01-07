@@ -65,7 +65,7 @@ class Pawn < Piece
   end
 
   def to_s
-    color == :black ? "\u265F": "\u2659"
+    color == :white ? "\u265F": "\u2659"
   end
 
   private

@@ -15,6 +15,6 @@ class Rook < Piece
   end
 
   def to_s
-    color == :black ? "\u265C": "\u2656"
+    color == :white ? "\u265C": "\u2656"
   end
 end

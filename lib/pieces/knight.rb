@@ -19,6 +19,6 @@ class Knight < Piece
   end
 
   def to_s
-    color == :black ? "\u265E": "\u2658"
+    color == :white ? "\u265E": "\u2658"
   end
 end
