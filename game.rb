@@ -1,15 +1,20 @@
 require 'yaml'
+require_relative 'lib/rules.rb'
 
 # class holds game logic
 class Game
   attr_reader :player1, :player2
   attr_accessor :current_player, :board
 
+  include Rules
+
   def initialize(board, player1, player2)
     @board = board
     @player1 = player1
     @player2 = player2
     @current_player = player2
+    intro
+    instructions
   end
 
   def load
