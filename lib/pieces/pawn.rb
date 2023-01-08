@@ -1,9 +1,10 @@
-require_relative 'piece.rb'
-require_relative 'stepable.rb'
+# frozen_string_literal: true
+
+require_relative 'piece'
+require_relative 'stepable'
 
 # class for pawn in chess
 class Pawn < Piece
-
   def directions
     if at_beginning? && color == :black
       [
@@ -27,14 +28,14 @@ class Pawn < Piece
   end
 
   def available_moves
-    moves = { :av_moves => [], :close_friends => [] }
+    moves = { av_moves: [], close_friends: [] }
     row, col = location
     directions.each do |(dr, dc)|
       new_loc = [row + dr, col + dc]
       break if out_of_bounds?(new_loc)
 
-      if board[new_loc].nil?
-        moves[:av_moves] << new_loc unless !board[one_forward].nil?
+      if board[new_loc].nil? && board[one_forward].nil?
+        moves[:av_moves] << new_loc
       end
       if color == :black && enemy?(board[[row + 1, col - 1]])
         moves[:av_moves] << [row + 1, col - 1]
@@ -42,11 +43,11 @@ class Pawn < Piece
       if color == :black && enemy?(board[[row + 1, col + 1]])
         moves[:av_moves] << [row + 1, col + 1]
       end
-      if color == :white && enemy?(board[[row -1, col + 1]])
-        moves[:av_moves] << [row -1, col + 1]
+      if color == :white && enemy?(board[[row - 1, col + 1]])
+        moves[:av_moves] << [row - 1, col + 1]
       end
-      if color == :white && enemy?(board[[row -1, col - 1]])
-        moves[:av_moves] << [row -1, col - 1]
+      if color == :white && enemy?(board[[row - 1, col - 1]])
+        moves[:av_moves] << [row - 1, col - 1]
       end
       if !board[[row + 1, col - 1]].nil? && color == :black && !enemy?(board[[row + 1, col - 1]])
         moves[:close_friends] << [row + 1, col - 1]
@@ -65,20 +66,20 @@ class Pawn < Piece
   end
 
   def to_s
-    color == :white ? "\u265F": "\u2659"
+    color == :white ? "\u265F" : "\u2659"
   end
 
   private
 
   def at_beginning?
-    row, col = location
+    row, _col = location
     row == 1 || row == 6
   end
 
   def one_forward
     r, c = location
     if color == :black
-      [r + 1, c] 
+      [r + 1, c]
     else
       [r - 1, c]
     end

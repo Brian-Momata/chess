@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # contains the rules and intro
 module Rules
   def intro
-    puts "===================================="
+    puts '===================================='
     puts 'Welcome to a game of chess'
-    puts "===================================="
+    puts '===================================='
   end
 
   def instructions

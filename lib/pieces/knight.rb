@@ -1,5 +1,7 @@
-require_relative 'piece.rb'
-require_relative 'stepable.rb'
+# frozen_string_literal: true
+
+require_relative 'piece'
+require_relative 'stepable'
 
 # class for a chess knight
 class Knight < Piece
@@ -19,6 +21,6 @@ class Knight < Piece
   end
 
   def to_s
-    color == :white ? "\u265E": "\u2658"
+    color == :white ? "\u265E" : "\u2658"
   end
 end

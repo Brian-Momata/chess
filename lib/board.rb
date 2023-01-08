@@ -1,10 +1,11 @@
-require_relative 'pieces/bishop.rb'
-require_relative 'pieces/king.rb'
-require_relative 'pieces/knight.rb'
-require_relative 'pieces/pawn.rb'
-require_relative 'pieces/queen.rb'
-require_relative 'pieces/rook.rb'
+# frozen_string_literal: true
 
+require_relative 'pieces/bishop'
+require_relative 'pieces/king'
+require_relative 'pieces/knight'
+require_relative 'pieces/pawn'
+require_relative 'pieces/queen'
+require_relative 'pieces/rook'
 
 # class for maintaining the chess board
 class Board
@@ -25,19 +26,18 @@ class Board
   end
 
   def checkmate?
-    return false if !in_check?
+    return false unless in_check?
 
     first_king = kings.first
     second_king = kings.last
 
-    first_enemies = board.flatten.select { |piece| first_king.enemy?(piece) }
-    second_enemies = board.flatten.select { |piece| second_king.enemy?(piece) }
+    first_enem_moves = board.flatten.select { |piece| first_king.enemy?(piece) }
+                            .collect { |enemy| enemy.available_moves[:av_moves] }
+    second_enem_moves = board.flatten.select { |piece| second_king.enemy?(piece) }
+                             .collect { |enemy| enemy.available_moves[:av_moves] }
 
-    first_enem_moves = first_enemies.collect { |enemy| enemy.available_moves[:av_moves] }
-    second_enem_moves = second_enemies.collect { |enemy| enemy.available_moves[:av_moves] }
-
-    first_king.available_moves[:av_moves].all? { |m| first_enem_moves.flatten(1).include?(m)} ||
-    second_king.available_moves[:av_moves].all? { |m| second_enem_moves.flatten(1).include?(m) }
+    first_king.available_moves[:av_moves].all? { |m| first_enem_moves.flatten(1).include?(m) } ||
+      second_king.available_moves[:av_moves].all? { |m| second_enem_moves.flatten(1).include?(m) }
   end
 
   def in_check?
@@ -51,12 +51,9 @@ class Board
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
+    raise 'Invalid Move' unless piece.available_moves[:av_moves].include?(end_pos)
     
-    if !piece.available_moves[:av_moves].include?(end_pos)
-      raise 'Invalid Move'
-    else
-     self[end_pos] = piece
-    end
+    self[end_pos] = piece
     piece.location = end_pos
     self[start_pos] = nil
   end
@@ -68,10 +65,10 @@ class Board
     numbers.each_with_index do |num, r|
       puts ''
       puts '  -------------------------------'
-      print num + ' | '
+      print "#{num} | "
       letters.each_index do |c|
         piece = board[r][c]
-        print " " if piece.nil?
+        print ' ' if piece.nil?
         print "#{piece}|  "
       end
     end
@@ -109,7 +106,7 @@ class Board
   end
 
   private
-   
+
   def kings
     board.flatten.select { |piece| piece.is_a?(King) }
   end

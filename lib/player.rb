@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class for a chess player
 class Player
   attr_reader :color

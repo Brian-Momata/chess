@@ -1,5 +1,7 @@
-require_relative 'piece.rb'
-require_relative 'jumpable.rb'
+# frozen_string_literal: true
+
+require_relative 'piece'
+require_relative 'jumpable'
 
 # class for a chess queen
 class Queen < Piece
@@ -19,6 +21,6 @@ class Queen < Piece
   end
 
   def to_s
-    color == :white ? "\u265B": "\u2655"
+    color == :white ? "\u265B" : "\u2655"
   end
 end

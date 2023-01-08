@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 # module for a chess piece that moves one square at a time
 module Stepable
-  
   def available_moves
-    moves = { :av_moves => [], :close_friends => [] }
+    moves = { av_moves: [], close_friends: [] }
     row, col = location
     directions.each do |(dr, dc)|
       new_loc = [row + dr, col + dc]
