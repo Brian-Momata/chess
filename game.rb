@@ -1,5 +1,5 @@
 require 'yaml'
-require_relative 'lib/rules.rb'
+require_relative 'lib/rules'
 
 # class holds game logic
 class Game
@@ -19,19 +19,20 @@ class Game
 
   def load
     if File.exist?('saved_games/game_1.yaml')
-      saved_game = File.open('saved_games/game_1.yaml') { |f| YAML.safe_load(
-        f,
-        aliases: true,
-        permitted_classes:[
-          Symbol,
-          Board,
-          Rook,
-          King,
-          Queen,
-          Bishop,
-          Knight,
-          Pawn,
-          Player
+      saved_game = File.open('saved_games/game_1.yaml') { |f|
+        YAML.safe_load(
+          f,
+          aliases: true,
+          permitted_classes: [
+            Symbol,
+            Board,
+            Rook,
+            King,
+            Queen,
+            Bishop,
+            Knight,
+            Pawn,
+            Player
           ]
         )
       }
@@ -56,7 +57,7 @@ class Game
   end
 
   def switch_player!
-    @current_player = (current_player == player1) ? player2 : player1
+    @current_player = current_player == player1 ? player2 : player1
   end
 
   def turn_play
@@ -71,8 +72,8 @@ class Game
     loop do
       puts "#{current_player.color.capitalize}'s turn: Select piece you want to move"
       start_pos = current_player.get_pos
-      if !start_pos.include?(nil)
-        if !board[start_pos].nil? && board[start_pos].color == current_player.color
+      unless start_pos.include?(nil) || board[start_pos].nil?
+        if board[start_pos].color == current_player.color
           break
         end
       end
@@ -97,7 +98,7 @@ class Game
       elsif selection.downcase == 'save'
         save([@board, @current_player])
       end
-      puts "Select a position to move to:"
+      puts 'Select a position to move to:'
       end_pos = current_player.get_pos
       begin
         board.move_piece(start_pos, end_pos)
@@ -111,6 +112,6 @@ class Game
   def save(objects)
     Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
     yaml = YAML.dump(objects)
-    File.open('saved_games/game_1.yaml', 'w') { |f| f.puts yaml}
+    File.open('saved_games/game_1.yaml', 'w') { |f| f.puts yaml }
   end
 end
